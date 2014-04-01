@@ -51,11 +51,17 @@ func PostSignup(w *rest.ResponseWriter, req *rest.Request) {
 	      w.WriteJson(&signup)
 }
 
+func OptionsSignup(w *rest.ResponseWriter, req *rest.Request) {
+        w.Header().Set("Access-Control-Allow-Origin", "*")
+        w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+}
+
 func main() {
         handler := rest.ResourceHandler{}
         handler.SetRoutes(
                 rest.Route{"GET", "/signups/:id", GetSignup},
                 rest.Route{"POST", "/signup", PostSignup},
+                rest.Route{"OPTIONS", "/signup", OptionsSignup},
         )
         http.ListenAndServe(":8288", &handler)
 }

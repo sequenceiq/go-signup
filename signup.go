@@ -12,15 +12,6 @@ type Signup struct {
         Email string
 }
 
-func GetSignup(w *rest.ResponseWriter, req *rest.Request) {
-        signup := Signup{
-                Id:   req.PathParam("id"),
-                Email: "marton@sequenceiq.com",
-        }
-        w.Header().Set("Access-Control-Allow-Origin", "*")
-        w.WriteJson(&signup)
-}
-
 func PostSignup(w *rest.ResponseWriter, req *rest.Request) {
         signup := Signup{}
 	      err := req.DecodeJsonPayload(&signup)
@@ -47,7 +38,7 @@ func PostSignup(w *rest.ResponseWriter, req *rest.Request) {
       	}
 
         fmt.Println(signup)
-        w.Header().Set("Access-Control-Allow-Origin", "*")
+        w.Header().Set("Access-Control-Allow-Origin", "http://sequenceiq.com")
 	      w.WriteJson(&signup)
 }
 
@@ -59,7 +50,6 @@ func OptionsSignup(w *rest.ResponseWriter, req *rest.Request) {
 func main() {
         handler := rest.ResourceHandler{}
         handler.SetRoutes(
-                rest.Route{"GET", "/signups/:id", GetSignup},
                 rest.Route{"POST", "/signup", PostSignup},
                 rest.Route{"OPTIONS", "/signup", OptionsSignup},
         )
